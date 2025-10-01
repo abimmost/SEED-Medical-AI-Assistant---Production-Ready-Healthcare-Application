@@ -1,0 +1,9 @@
+------------------------------------------------------------------------
+                        MOKENYU ATSIMBOM GWE
+------------------------------------------------------------------------
+
+Challenges faced during the development and execution of the MEDICARE AI
+
+- Setting up repo:
+    After forking the original repo, I wanted to have a separate branch where I can type my code and create my done.txt file without getting content from the original master branch so I had to experiment. I later on found out that if I created an empty folder, initialised a local repo, linked the forked repo as remote, then run 'git pull', the original code comes on a branch 'master' of its own and doesn't interfere with other branches.
+- 
