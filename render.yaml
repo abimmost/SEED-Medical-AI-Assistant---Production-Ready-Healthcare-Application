@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: SEED Medicare AI Backend
+    env: python
+    # Source configuration for automatic deployments
+    repo: https://github.com/abimmost/SEED-Medical-AI-Assistant---Production-Ready-Healthcare-Application.git
+    branch: abimmost-code
+
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn app:app --host 0.0.0.0 --port $PORT"
+    plan: free
+
+    # 🚨 SECURE CONFIGURATION: Only list the KEYS here 🚨
+    envVars:
+      - key: GOOGLE_API_KEY
+        sync: true
+      - key: TAVILY_API_KEY
+        sync: true
+      - key: CORS_ORIGINS
+        value: "http://localhost:3000,http://127.0.0.1:3000"
+      - key: GEMINI_MODEL
+        value: "gemini-2.5-flash"
+      - key: TEMPERATURE
+        value: 0.7
+      - key: MAX_TOKENS
+        value: 2048
