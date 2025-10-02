@@ -6,7 +6,7 @@ services:
     repo: https://github.com/abimmost/SEED-Medical-AI-Assistant---Production-Ready-Healthcare-Application.git
     branch: abimmost-code
     region: frankfurt # Default: oregon
-    # autoDeployTrigger: 'off' # Disable automatic deploys
+    autoDeployTrigger: 'off' # Disable automatic deploys
 
     buildCommand: "pip install -r requirements.txt"
     startCommand: "uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT"
