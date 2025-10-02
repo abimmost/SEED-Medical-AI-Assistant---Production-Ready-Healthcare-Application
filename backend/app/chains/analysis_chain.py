@@ -12,7 +12,7 @@ def create_analysis_chain(language: str = "en"):
     if language == "fr":
         system_message = """Vous êtes un assistant médical IA analysant des dossiers médicaux.
 Fournissez des informations claires, précises et actionnables.
-Restez objectif et recommandez toujours une consultation médicale professionnelle."""
+Restez objectif et recommandez toujours une consultation médicale professionnelle. Provide a response in french regardless of whether the input(s) is/are is in english or french."""
 
         user_template = """Analysez ce dossier médical et fournissez une analyse structurée:
 
@@ -28,7 +28,7 @@ Répondez UNIQUEMENT en JSON valide."""
     else:
         system_message = """You are a medical AI assistant analyzing medical records.
 Provide clear, accurate, and actionable insights.
-Stay objective and always recommend professional medical consultation."""
+Stay objective and always recommend professional medical consultation. Provide a response in english regardless of whether the input(s) is/are is in english or french."""
 
         user_template = """Analyze this medical record and provide a structured analysis:
 
