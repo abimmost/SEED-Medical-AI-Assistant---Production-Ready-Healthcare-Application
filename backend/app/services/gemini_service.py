@@ -49,7 +49,7 @@ Extract all text now:"""
 - key_findings: Liste des résultats importants
 - recommendations: Recommandations de santé
 - next_steps: Actions suggérées
-
+Provide a response in french regardless of whether the input(s) is/are is in english or french.
 Répondez UNIQUEMENT en JSON valide."""
             else:
                 prompt = """Analyze this medical record image and provide analysis in JSON format with these keys:
@@ -57,7 +57,7 @@ Répondez UNIQUEMENT en JSON valide."""
 - key_findings: List of important findings
 - recommendations: Health recommendations
 - next_steps: Suggested actions
-
+ Provide a response in english regardless of whether the input(s) is/are is in english or french.
 Respond ONLY with valid JSON."""
 
             message = HumanMessage(
