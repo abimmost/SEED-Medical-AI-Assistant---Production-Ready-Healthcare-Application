@@ -9,7 +9,7 @@ services:
     autoDeployTrigger: 'commit' # Disable automatic deploys(commit|checksPass|off)
 
     buildCommand: "pip install -r requirements.txt"
-    predeployCommand: "cd backend"
+    preDeployCommand: "cd backend"
     startCommand: "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
     plan: free
 
