@@ -9,7 +9,8 @@ services:
     autoDeployTrigger: 'off' # Disable automatic deploys
 
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+    predeployCommand: "cd backend"
+    startCommand: "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
     plan: free
 
     # 🚨 SECURE CONFIGURATION: Only list the KEYS here 🚨
