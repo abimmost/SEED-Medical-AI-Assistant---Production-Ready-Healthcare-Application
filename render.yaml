@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: SEED-Medicare-AI-Backend
+    name: SEED Medicare AI Backend
     env: python
     # Source configuration for automatic deployments
     repo: https://github.com/abimmost/SEED-Medical-AI-Assistant---Production-Ready-Healthcare-Application.git
@@ -9,7 +9,7 @@ services:
     autoDeployTrigger: 'off' # Disable automatic deploys
 
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT"
+    startCommand: "cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT"
     plan: free
 
     # 🚨 SECURE CONFIGURATION: Only list the KEYS here 🚨
