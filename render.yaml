@@ -6,7 +6,7 @@ services:
     repo: https://github.com/abimmost/SEED-Medical-AI-Assistant---Production-Ready-Healthcare-Application.git
     branch: abimmost-code
     region: frankfurt # Default: oregon
-    autoDeployTrigger: 'off' # Disable automatic deploys
+    autoDeployTrigger: 'commit' # Disable automatic deploys(commit|checksPass|off)
 
     buildCommand: "pip install -r requirements.txt"
     predeployCommand: "cd backend"
