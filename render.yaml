@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: SEED Medicare AI Backend
+    name: SEED Medicare AI Assistant
     env: python
     # Source configuration for automatic deployments
     repo: https://github.com/abimmost/SEED-Medical-AI-Assistant---Production-Ready-Healthcare-Application.git
