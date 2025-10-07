@@ -4,7 +4,7 @@ Given this API service already hosted on Render, please write comprehensive API 
 
 Do not provide frontend code; instead, focus only on minimal but clear guidance about how each endpoint is structured and how the responses should be interpreted.
 
-Render URL: https://medical-ai-assistant-production-ready.onrender.com/
+Render URL: https://seed-medicare-ai-assistant.onrender.com
 
 
 
@@ -25,4 +25,4 @@ Create a tabs-based interface with four sections: (1) Welcome Tab as default sho
 Add a fixed bottom-right floating button to toggle language between English (🇬🇧 flag emoji) and French (🇫🇷 flag emoji) that persists across all tabs. Include loading skeletons for API calls, toast notifications for errors, copy-to-clipboard buttons on results, smooth tab transitions with underline indicators, and prominent medical disclaimer 
 
 
-"⚠️ For informational purposes only - Always consult healthcare professionals" on every tab. Use API base URL `https://medical-ai-assistant-production-ready.onrender.com` with endpoints from documentation. Ensure responsive mobile-first design with professional medical UI, trust indicators, and accessible form controls.
+"⚠️ For informational purposes only - Always consult healthcare professionals" on every tab. Use API base URL `https://seed-medicare-ai-assistant.onrender.com` with endpoints from documentation. Ensure responsive mobile-first design with professional medical UI, trust indicators, and accessible form controls.
