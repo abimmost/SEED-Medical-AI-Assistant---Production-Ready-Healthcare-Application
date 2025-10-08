@@ -19,7 +19,7 @@ services:
       - key: TAVILY_API_KEY
         sync: false
       - key: CORS_ORIGINS
-        value: "https://seed-medicare-assistant-frontend.vercel.app/"
+        value: "https://*.vercel.app,https://seed-medicare-assistant-frontend.vercel.app,https://seed-medicare-assistant-frontend-42ek3mpku.vercel.app,https://seed-medicare-assistant-fro-git-5181a5-kenyus-projects-4ef859ad.vercel.app,https://seed-medicare-assistant-frontend-kenyus-projects-4ef859ad.vercel.app"
       - key: GEMINI_MODEL
         value: "gemini-2.5-flash"
       - key: TEMPERATURE
