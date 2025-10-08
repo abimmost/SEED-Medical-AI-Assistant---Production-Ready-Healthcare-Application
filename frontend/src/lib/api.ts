@@ -1,7 +1,8 @@
 // Centralized API client for MediCare AI frontend
 // Uses NEXT_PUBLIC_API_BASE_URL and provides typed helpers for all endpoints.
 
-const BASE = process.env.NEXT_PUBLIC_API_BASE_URL ??
+const BASE =
+  process.env.NEXT_PUBLIC_API_BASE_URL ??
   "https://seed-medicare-ai-assistant.onrender.com";
 
 export type Language = "en" | "fr";
@@ -46,29 +47,45 @@ export type ResearchResponse = {
   timestamp: string;
 };
 
-function withTimeout<T>(p: Promise<T>, ms = 60000): Promise<T> {
-  const ctrl = new AbortController();
-  const t = setTimeout(() => ctrl.abort(), ms);
-  return new Promise<T>((resolve, reject) => {
-    p.then(resolve).catch(reject).finally(() => clearTimeout(t));
-  });
+function getStringField(obj: unknown, key: string): string | undefined {
+  if (typeof obj !== "object" || obj === null) return undefined;
+  const v = (obj as Record<string, unknown>)[key];
+  return typeof v === "string" ? v : undefined;
 }
 
-async function handleJSON(res: Response) {
-  let payload: any = null;
+async function handleJSON<T>(res: Response): Promise<T> {
+  let payload: unknown = null;
   try {
     payload = await res.json();
   } catch {
     // ignore
   }
   if (!res.ok) {
-    const msg = payload?.detail || payload?.message || res.statusText || "Request failed";
+    const msg =
+      getStringField(payload, "detail") ??
+      getStringField(payload, "message") ??
+      res.statusText ??
+      "Request failed";
     throw new Error(msg);
   }
-  return payload;
+  return payload as T;
 }
 
-export async function chat(message: string, language: Language = "en"): Promise<ChatResponse> {
+function withTimeout<T>(p: Promise<T>, ms = 60000): Promise<T> {
+  // Note: We do not pass AbortController.signal to fetch here; this is a soft timeout wrapper.
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), ms);
+  return new Promise<T>((resolve, reject) => {
+    p.then(resolve)
+      .catch(reject)
+      .finally(() => clearTimeout(t));
+  });
+}
+
+export async function chat(
+  message: string,
+  language: Language = "en"
+): Promise<ChatResponse> {
   const res = await withTimeout(
     fetch(`${BASE}/api/chat`, {
       method: "POST",
@@ -76,7 +93,7 @@ export async function chat(message: string, language: Language = "en"): Promise<
       body: JSON.stringify({ message, language }),
     })
   );
-  return handleJSON(res);
+  return handleJSON<ChatResponse>(res);
 }
 
 export async function analyzeText(
@@ -91,7 +108,7 @@ export async function analyzeText(
       body: JSON.stringify({ text, context, language }),
     })
   );
-  return handleJSON(res);
+  return handleJSON<AnalysisResponse>(res);
 }
 
 export async function analyzeImage(
@@ -106,7 +123,7 @@ export async function analyzeImage(
   const res = await withTimeout(
     fetch(`${BASE}/api/analyze-image`, { method: "POST", body: fd })
   );
-  return handleJSON(res);
+  return handleJSON<ImageAnalysisResponse>(res);
 }
 
 export async function extractText(file: File): Promise<ExtractTextResponse> {
@@ -115,7 +132,7 @@ export async function extractText(file: File): Promise<ExtractTextResponse> {
   const res = await withTimeout(
     fetch(`${BASE}/api/extract-text`, { method: "POST", body: fd })
   );
-  return handleJSON(res);
+  return handleJSON<ExtractTextResponse>(res);
 }
 
 export async function research(
@@ -130,5 +147,5 @@ export async function research(
       body: JSON.stringify({ query, max_results, language }),
     })
   );
-  return handleJSON(res);
+  return handleJSON<ResearchResponse>(res);
 }

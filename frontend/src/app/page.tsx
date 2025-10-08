@@ -10,7 +10,6 @@ import {
   ChevronDown,
   ChevronUp,
   Languages,
-  Loader2,
   AlertTriangle,
   Send,
 } from "lucide-react";
@@ -83,8 +82,9 @@ export default function HomePage() {
     try {
       const data = await apiChat(message, lang);
       setMessages((m) => [...m, { role: "ai", text: data.response, id: crypto.randomUUID() }]);
-    } catch (e: any) {
-      toast.error(e.message || "Chat failed");
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e);
+      toast.error(msg || "Chat failed");
     } finally {
       setChatLoading(false);
     }
@@ -104,8 +104,9 @@ export default function HomePage() {
       const data = await apiAnalyzeImage(file, { language: lang, extract_text_only: false });
       setExtractedText(data.extracted_text);
       setAnalysis(data.analysis);
-    } catch (e: any) {
-      toast.error(e.message || "Image analysis failed");
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e);
+      toast.error(msg || "Image analysis failed");
     } finally {
       setImageLoading(false);
     }
@@ -138,8 +139,9 @@ export default function HomePage() {
       const data = await apiResearch(q, { max_results: 5, language: lang });
       setSummary(data.summary);
       setResults(data.results || []);
-    } catch (e: any) {
-      toast.error(e.message || "Research failed");
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e);
+      toast.error(msg || "Research failed");
     } finally {
       setResearchLoading(false);
     }
