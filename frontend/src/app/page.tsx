@@ -76,20 +76,30 @@ export default function HomePage() {
   const chatSuggestions = useMemo(
     () => [
       lang === "fr" ? "Symptômes du paludisme ?" : "Symptoms of malaria?",
-      lang === "fr" ? "Quelles sont les causes des maux de tête ?" : "What causes headaches?",
-      lang === "fr" ? "Conseils pour gérer le diabète" : "Diabetes management tips",
+      lang === "fr"
+        ? "Quelles sont les causes des maux de tête ?"
+        : "What causes headaches?",
+      lang === "fr"
+        ? "Conseils pour gérer le diabète"
+        : "Diabetes management tips",
     ],
     [lang]
   );
 
   async function sendChat(message: string) {
     if (!message.trim()) return;
-    setMessages((m) => [...m, { role: "user", text: message, id: crypto.randomUUID() }]);
+    setMessages((m) => [
+      ...m,
+      { role: "user", text: message, id: crypto.randomUUID() },
+    ]);
     setChatInput("");
     setChatLoading(true);
     try {
       const data = await apiChat(message, lang);
-      setMessages((m) => [...m, { role: "ai", text: data.response, id: crypto.randomUUID() }]);
+      setMessages((m) => [
+        ...m,
+        { role: "ai", text: data.response, id: crypto.randomUUID() },
+      ]);
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : String(e);
       toast.error(msg || "Chat failed");
@@ -109,7 +119,10 @@ export default function HomePage() {
     setExtractedText(null);
     setAnalysis(null);
     try {
-      const data = await apiAnalyzeImage(file, { language: lang, extract_text_only: false });
+      const data = await apiAnalyzeImage(file, {
+        language: lang,
+        extract_text_only: false,
+      });
       setExtractedText(data.extracted_text);
       setAnalysis(data.analysis);
     } catch (e: unknown) {
@@ -125,7 +138,11 @@ export default function HomePage() {
     const f = e.dataTransfer.files?.[0];
     if (f) {
       if (!f.type.startsWith("image/")) {
-        toast.error(lang === "fr" ? "Le fichier doit être une image" : "File must be an image");
+        toast.error(
+          lang === "fr"
+            ? "Le fichier doit être une image"
+            : "File must be an image"
+        );
         return;
       }
       void handleAnalyzeImage(f);
@@ -801,7 +818,11 @@ function Accordion({
         aria-expanded={open}
       >
         <span className="font-medium text-slate-800">{title}</span>
-        {open ? <ChevronUp className="size-4 text-slate-600" /> : <ChevronDown className="size-4 text-slate-600" />}
+        {open ? (
+          <ChevronUp className="size-4 text-slate-600" />
+        ) : (
+          <ChevronDown className="size-4 text-slate-600" />
+        )}
       </button>
       {open && <div className="px-4 pb-4">{content}</div>}
     </div>
@@ -809,7 +830,14 @@ function Accordion({
 }
 
 function SkeletonLine({ className = "" }: { className?: string }) {
-  return <div className={classNames("h-3 rounded bg-slate-200 animate-pulse", className)} />;
+  return (
+    <div
+      className={classNames(
+        "h-3 rounded bg-slate-200 animate-pulse",
+        className
+      )}
+    />
+  );
 }
 
 function CardSkeleton({
@@ -824,11 +852,23 @@ function CardSkeleton({
   color?: "blue" | "default";
 }) {
   return (
-    <div className={classNames("rounded-lg border p-4", color === "blue" ? "border-blue-200 bg-blue-50" : "border-slate-200 bg-white")}>
+    <div
+      className={classNames(
+        "rounded-lg border p-4",
+        color === "blue"
+          ? "border-blue-200 bg-blue-50"
+          : "border-slate-200 bg-white"
+      )}
+    >
       {title && <SkeletonLine className={classNames("mb-3", widthTitle)} />}
       <div className="space-y-2">
         {Array.from({ length: lines }).map((_, i) => (
-          <SkeletonLine key={i} className={i % 3 === 0 ? "w-11/12" : i % 3 === 1 ? "w-4/5" : "w-9/12"} />
+          <SkeletonLine
+            key={i}
+            className={
+              i % 3 === 0 ? "w-11/12" : i % 3 === 1 ? "w-4/5" : "w-9/12"
+            }
+          />
         ))}
       </div>
     </div>
