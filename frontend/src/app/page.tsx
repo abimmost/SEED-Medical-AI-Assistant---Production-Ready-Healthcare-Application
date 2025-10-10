@@ -320,30 +320,34 @@ export default function HomePage() {
             </div>
 
             <div className="grid md:grid-cols-3 gap-4">
-              {(lang === "fr"
-                ? ["Discussion", "Analyse", "Recherche"]
-                : ["Chat", "Analysis", "Research"]
-              ).map((title, i) => (
-                <div
-                  key={title}
-                  className="rounded-lg border border-slate-200 p-4 bg-white"
-                >
-                  <h3 className="font-semibold text-blue-800 mb-2">{title}</h3>
-                  <p className="text-sm text-slate-600">
-                    {i === 0
-                      ? lang === "fr"
-                        ? "Posez des questions médicales en anglais ou en français."
-                        : "Ask medical questions in English or French."
-                      : i === 1
-                        ? lang === "fr"
-                          ? "Téléversez une image médicale pour extraire le texte et obtenir une analyse structurée."
-                          : "Upload a medical image to extract text and get structured analysis."
-                        : lang === "fr"
-                          ? "Recherchez des sources fiables (OMS, CDC, PubMed) et recevez un résumé."
-                          : "Search reliable sources (WHO, CDC, PubMed) and get a summary."}
-                  </p>
-                </div>
-              ))}
+              {/* Define the tab keys for the welcome cards */}
+              {([ "chat", "analysis", "research" ] as TabKey[]).map((tabKey, i) => {
+                const title = lang === "fr"
+                  ? ["Discussion", "Analyse", "Recherche"][i]
+                  : ["Chat", "Analysis", "Research"][i];
+                const description = i === 0
+                  ? lang === "fr"
+                    ? "Posez des questions médicales en anglais ou en français."
+                    : "Ask medical questions in English or French."
+                  : i === 1
+                    ? lang === "fr"
+                      ? "Téléversez une image médicale pour extraire le texte et obtenir une analyse structurée."
+                      : "Upload a medical image to extract text and get structured analysis."
+                    : lang === "fr"
+                      ? "Recherchez des sources fiables (OMS, CDC, PubMed) et recevez un résumé."
+                      : "Search reliable sources (WHO, CDC, PubMed) and get a summary.";
+
+                return (
+                  <button
+                    key={tabKey}
+                    onClick={() => setActive(tabKey)}
+                    className="rounded-lg border border-slate-200 p-4 bg-white text-left hover:bg-slate-50 transition-colors duration-200"
+                  >
+                    <h3 className="font-semibold text-blue-800 mb-2">{title}</h3>
+                    <p className="text-sm text-slate-600">{description}</p>
+                  </button>
+                );
+              })}
             </div>
           </motion.div>
         )}
