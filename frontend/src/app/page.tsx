@@ -24,6 +24,7 @@ import {
   type AnalysisResponse,
   type ResearchResult,
 } from "@/lib/api";
+import { formatTextWithBold } from "@/lib/utils";
 
 const sora = Sora({ subsets: ["latin"], weight: ["700"] });
 const nunito = Sora({ subsets: ["latin"], weight: ["600"] });
@@ -344,19 +345,6 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-
-            {/* Trust indicators */}
-            <div className="flex flex-wrap gap-2 text-xs text-slate-600">
-              <span className="px-2 py-1 rounded-full bg-slate-100 border border-slate-200">
-                WHO
-              </span>
-              <span className="px-2 py-1 rounded-full bg-slate-100 border border-slate-200">
-                CDC
-              </span>
-              <span className="px-2 py-1 rounded-full bg-slate-100 border border-slate-200">
-                PubMed
-              </span>
-            </div>
           </motion.div>
         )}
 
@@ -389,7 +377,9 @@ export default function HomePage() {
                       : "mr-auto bg-blue-600 text-white"
                   )}
                 >
-                  <p className="whitespace-pre-wrap">{m.text}</p>
+                  <p className="whitespace-pre-wrap">
+                    {m.role === "ai" ? formatTextWithBold(m.text) : m.text}
+                  </p>
                   <button
                     className="opacity-80 hover:opacity-100"
                     onClick={() => copy(m.text)}
@@ -581,7 +571,7 @@ export default function HomePage() {
                   </button>
                 </div>
                 <p className="whitespace-pre-wrap text-sm text-slate-700">
-                  {extractedText}
+                  {formatTextWithBold(extractedText)}
                 </p>
               </div>
             )}
@@ -592,7 +582,7 @@ export default function HomePage() {
                   title={lang === "fr" ? "Résumé" : "Summary"}
                   content={
                     <p className="text-sm text-slate-700 whitespace-pre-wrap">
-                      {analysis.summary}
+                      {formatTextWithBold(analysis.summary)}
                     </p>
                   }
                 />
@@ -601,7 +591,7 @@ export default function HomePage() {
                   content={
                     <ul className="list-disc pl-5 text-sm text-slate-700 space-y-1">
                       {analysis.key_findings.map((k, i) => (
-                        <li key={i}>{k}</li>
+                        <li key={i}>{formatTextWithBold(k)}</li>
                       ))}
                     </ul>
                   }
@@ -611,7 +601,7 @@ export default function HomePage() {
                   content={
                     <ul className="list-disc pl-5 text-sm text-slate-700 space-y-1">
                       {analysis.recommendations.map((k, i) => (
-                        <li key={i}>{k}</li>
+                        <li key={i}>{formatTextWithBold(k)}</li>
                       ))}
                     </ul>
                   }
@@ -621,7 +611,7 @@ export default function HomePage() {
                   content={
                     <ul className="list-disc pl-5 text-sm text-slate-700 space-y-1">
                       {analysis.next_steps.map((k, i) => (
-                        <li key={i}>{k}</li>
+                        <li key={i}>{formatTextWithBold(k)}</li>
                       ))}
                     </ul>
                   }
@@ -731,7 +721,7 @@ export default function HomePage() {
                   </button>
                 </div>
                 <p className="text-sm text-blue-900 whitespace-pre-wrap">
-                  {summary}
+                  {formatTextWithBold(summary)}
                 </p>
               </div>
             )}
@@ -749,14 +739,14 @@ export default function HomePage() {
                       rel="noreferrer noopener"
                       className="font-semibold text-blue-800 hover:underline"
                     >
-                      {r.title}
+                      {formatTextWithBold(r.title)}
                     </a>
                     <span className="text-xs px-2 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
                       {getSourceBadge(r.url)}
                     </span>
                   </div>
                   <p className="text-sm text-slate-700 line-clamp-5 whitespace-pre-wrap">
-                    {r.content}
+                    {formatTextWithBold(r.content)}
                   </p>
                   <div className="flex items-center justify-between text-xs text-slate-500">
                     <span>Score: {r.score.toFixed(2)}</span>
